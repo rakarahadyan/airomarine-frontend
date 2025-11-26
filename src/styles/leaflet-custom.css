@@ -1,0 +1,175 @@
+/* Custom Leaflet Styles */
+@import 'leaflet/dist/leaflet.css';
+@import 'leaflet-draw/dist/leaflet.draw.css';
+@import 'leaflet.markercluster/dist/MarkerCluster.css';
+@import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+
+/* Fix for default marker icons */
+.leaflet-default-icon-path {
+  background-image: url('/images/marker-icon.png');
+}
+
+/* Vessel marker styles */
+.vessel-marker {
+  transition: transform 0.3s ease-out;
+}
+
+.vessel-marker:hover {
+  z-index: 1000 !important;
+}
+
+.vessel-marker.selected {
+  filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.8));
+}
+
+/* Custom popup styles */
+.leaflet-popup-content-wrapper {
+  @apply rounded-lg shadow-lg bg-white dark:bg-gray-800;
+}
+
+.leaflet-popup-content {
+  @apply m-0 p-0;
+}
+
+.leaflet-popup-tip {
+  @apply bg-white dark:bg-gray-800;
+}
+
+/* Vessel popup */
+.vessel-popup {
+  @apply min-w-[280px] max-w-[350px];
+}
+
+.vessel-popup-header {
+  @apply flex items-center gap-3 p-3 border-b border-gray-200 dark:border-gray-700;
+}
+
+.vessel-popup-content {
+  @apply p-3 space-y-2;
+}
+
+.vessel-popup-row {
+  @apply flex justify-between text-sm;
+}
+
+.vessel-popup-label {
+  @apply text-gray-500 dark:text-gray-400;
+}
+
+.vessel-popup-value {
+  @apply font-medium text-gray-900 dark:text-white;
+}
+
+.vessel-popup-actions {
+  @apply flex gap-2 p-3 border-t border-gray-200 dark:border-gray-700;
+}
+
+/* Custom cluster styles */
+.marker-cluster {
+  @apply bg-blue-500 bg-opacity-60 rounded-full;
+}
+
+.marker-cluster div {
+  @apply bg-blue-600 text-white font-bold rounded-full flex items-center justify-center;
+  width: 30px;
+  height: 30px;
+  margin-left: 5px;
+  margin-top: 5px;
+}
+
+.marker-cluster-small {
+  @apply bg-green-500 bg-opacity-60;
+}
+
+.marker-cluster-small div {
+  @apply bg-green-600;
+}
+
+.marker-cluster-medium {
+  @apply bg-yellow-500 bg-opacity-60;
+}
+
+.marker-cluster-medium div {
+  @apply bg-yellow-600;
+}
+
+.marker-cluster-large {
+  @apply bg-red-500 bg-opacity-60;
+}
+
+.marker-cluster-large div {
+  @apply bg-red-600;
+}
+
+/* Map controls */
+.leaflet-control-zoom {
+  @apply border-none shadow-lg rounded-lg overflow-hidden;
+}
+
+.leaflet-control-zoom a {
+  @apply bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 
+         hover:bg-gray-100 dark:hover:bg-gray-700 border-none;
+}
+
+.leaflet-control-zoom a:first-child {
+  @apply rounded-t-lg;
+}
+
+.leaflet-control-zoom a:last-child {
+  @apply rounded-b-lg border-t border-gray-200 dark:border-gray-700;
+}
+
+/* Drawing controls */
+.leaflet-draw-toolbar a {
+  @apply bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700;
+}
+
+/* Coordinate display */
+.coordinate-display {
+  @apply fixed bottom-4 left-1/2 transform -translate-x-1/2 
+         bg-white dark:bg-gray-800 px-4 py-2 rounded-lg shadow-lg
+         text-sm font-mono z-[1000];
+}
+
+/* Layer switcher */
+.layer-switcher {
+  @apply absolute top-4 right-4 z-[1000] bg-white dark:bg-gray-800 
+         rounded-lg shadow-lg p-2;
+}
+
+/* Scale control */
+.leaflet-control-scale-line {
+  @apply bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600
+         text-gray-700 dark:text-gray-300;
+}
+
+/* Attribution */
+.leaflet-control-attribution {
+  @apply bg-white/80 dark:bg-gray-800/80 text-xs text-gray-600 dark:text-gray-400;
+}
+
+/* POI marker */
+.poi-marker {
+  @apply cursor-pointer transition-transform hover:scale-110;
+}
+
+/* Drawing shape styles */
+.leaflet-interactive.drawing-shape {
+  cursor: crosshair;
+}
+
+/* Fullscreen map container */
+.map-fullscreen {
+  position: fixed ! important;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+}
+
+/* Map loading overlay */
+.map-loading-overlay {
+  @apply absolute inset-0 bg-white/50 dark:bg-gray-900/50 
+         flex items-center justify-center z-[2000];
+}
