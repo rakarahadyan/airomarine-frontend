@@ -12,7 +12,7 @@ interface VesselCardProps {
 }
 
 export function VesselCard({ vessel, onClick, isSelected }: VesselCardProps) {
-  const statusVariant = vessel.speed > 0. 5 ? 'success' : vessel.navStatus === 5 ? 'info' : 'warning';
+  const statusVariant = vessel.speed > 0.5 ? 'success' : vessel.navStatus === 5 ? 'info' : 'warning';
 
   return (
     <div

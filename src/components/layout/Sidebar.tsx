@@ -28,11 +28,11 @@ const ShipIconCustom = ({ className }: { className?: string }) => (
 );
 
 const navigation = [
-  { name: 'Map', href: '/', icon: MapIcon },
-  { name: 'Vessels', href: '/vessels', icon: ShipIconCustom },
-  { name: 'POI', href: '/poi', icon: MapPinIcon },
-  { name: 'Users', href: '/users', icon: UsersIcon },
-  { name: 'Settings', href: '/settings', icon: Cog6ToothIcon },
+  { name: 'Map', href: '/dashboard', icon: MapIcon },
+  { name: 'Vessels', href: '/dashboard/vessels', icon: ShipIconCustom },
+  { name: 'POI', href: '/dashboard/poi', icon: MapPinIcon },
+  { name: 'Users', href: '/dashboard/users', icon: UsersIcon },
+  { name: 'Settings', href: '/dashboard/settings', icon: Cog6ToothIcon },
 ];
 
 export function Sidebar() {

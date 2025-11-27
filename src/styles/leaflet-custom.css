@@ -66,7 +66,7 @@
 
 /* Custom cluster styles */
 .marker-cluster {
-  @apply bg-blue-500 bg-opacity-60 rounded-full;
+  @apply bg-blue-500/60 rounded-full;
 }
 
 .marker-cluster div {
@@ -78,7 +78,7 @@
 }
 
 .marker-cluster-small {
-  @apply bg-green-500 bg-opacity-60;
+  @apply bg-green-500/60;
 }
 
 .marker-cluster-small div {
@@ -86,7 +86,7 @@
 }
 
 .marker-cluster-medium {
-  @apply bg-yellow-500 bg-opacity-60;
+  @apply bg-yellow-500/60;
 }
 
 .marker-cluster-medium div {
@@ -94,7 +94,7 @@
 }
 
 .marker-cluster-large {
-  @apply bg-red-500 bg-opacity-60;
+  @apply bg-red-500/60;
 }
 
 .marker-cluster-large div {
