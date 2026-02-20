@@ -24,6 +24,8 @@ export default function UsersPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [showFormModal, setShowFormModal] = useState(false);
   const [editingUser, setEditingUser] = useState<User | null>(null);
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [passwordUser, setPasswordUser] = useState<User | null>(null);
   
   const queryClient = useQueryClient();
   
@@ -42,7 +44,7 @@ export default function UsersPage() {
   const filteredUsers = users.filter(
     (user) =>
       user.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      // user.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       user.role_name?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -75,7 +77,7 @@ export default function UsersPage() {
           </div>
           <div>
             <p className="font-medium text-gray-900 dark:text-white">{row.username}</p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">{row.email || 'N/A'}</p>
+            {/* <p className="text-xs text-gray-500 dark:text-gray-400">{row.email || 'N/A'}</p> */}
           </div>
         </div>
       ),
@@ -130,7 +132,7 @@ export default function UsersPage() {
       cell: (row) => (
         <Dropdown
           trigger={
-            <button className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <button title='btnActions' className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
               <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 18a1 1 0 110-2 1 1 0 010 2zm0-7a1 1 0 110-2 1 1 0 010 2zm0-7a1 1 0 110-2 1 1 0 010 2z" />
               </svg>
@@ -141,6 +143,11 @@ export default function UsersPage() {
               label: 'Edit',
               icon: <PencilIcon className="h-4 w-4" />,
               onClick: () => handleEditUser(row),
+            },
+            {
+              label: 'Change Password',
+              icon: <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" /></svg>,
+              onClick: () => handleChangePassword(row),
             },
             {
               label: 'Delete',
@@ -169,6 +176,11 @@ export default function UsersPage() {
     if (confirm(`Are you sure you want to delete user "${user.username}"?`)) {
       deleteUser.mutate(user.id as string);
     }
+  };
+
+  const handleChangePassword = (user: User) => {
+    setPasswordUser(user);
+    setShowPasswordModal(true);
   };
 
 
@@ -317,6 +329,22 @@ export default function UsersPage() {
           onCancel={() => setShowFormModal(false)}
         />
       </Modal>
+
+      {/* Change Password Modal */}
+      <Modal
+        isOpen={showPasswordModal}
+        onClose={() => setShowPasswordModal(false)}
+        title={`Change Password - ${passwordUser?.username}`}
+        size="md"
+      >
+        {passwordUser && (
+          <ChangePasswordForm
+            userId={passwordUser.id as string}
+            onSubmit={() => setShowPasswordModal(false)}
+            onCancel={() => setShowPasswordModal(false)}
+          />
+        )}
+      </Modal>
     </div>
   );
 }
@@ -330,28 +358,41 @@ interface UserFormProps {
 
 function UserForm({ user, onSubmit, onCancel }: UserFormProps) {
   const [username, setUsername] = useState(user?.username || '');
-  const [email, setEmail] = useState(user?.email || '');
+  // // // const [email, setEmail] = useState(user?.email || '');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState<string>(user?.role_name || 'USER');
+  const [role, setRole] = useState<string>(user?.role_id ? user.role_id.toString() : '2'); // Default to 'USER' role
   const [activeUntil, setActiveUntil] = useState<string>(
     user?.active_until ? new Date(user.active_until).toISOString().split('T')[0] : ''
   );
+  const [error, setError] = useState<string>('');
 
   const queryClient = useQueryClient();
 
   const createUser = useMutation({
     mutationFn: (data: Partial<User>) => userApi.create(data),
     onSuccess: () => {
+      setError('');
       queryClient.invalidateQueries({ queryKey: ['users'] });
       onSubmit();
+    },
+    onError: (err: any) => {
+      const errorMessage = err?.response?.data?.message || err?.message || 'Failed to create user. Please try again.';
+      setError(errorMessage);
+      console.error('Create user error:', err);
     },
   });
 
   const updateUser = useMutation({
     mutationFn: ({ id, data }: { id: string; data: Partial<User> }) => userApi.update(id as string, data),
     onSuccess: () => {
+      setError('');
       queryClient.invalidateQueries({ queryKey: ['users'] });
       onSubmit();
+    },
+    onError: (err: any) => {
+      const errorMessage = err?.response?.data?.message || err?.message || 'Failed to update user. Please try again.';
+      setError(errorMessage);
+      console.error('Update user error:', err);
     },
   });
 
@@ -360,8 +401,8 @@ function UserForm({ user, onSubmit, onCancel }: UserFormProps) {
 
     const payload: Partial<User> & { password?: string; role_id?: string; active_until?: string | null } = {
       username,
-      email,
-      role_name: role,
+      // email,
+      role_id: role,
       active_until: activeUntil || null,
     };
 
@@ -376,6 +417,12 @@ function UserForm({ user, onSubmit, onCancel }: UserFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+      {error && (
+        <div className="p-3 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 text-sm">
+          {error}
+        </div>
+      )}
+
       <Input label="Username" placeholder="Enter username" value={username} onChange={(e) => setUsername(e.target.value)} />
       {/* <Input label="Email" type="email" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)} /> */}
       {!user && (
@@ -392,9 +439,9 @@ function UserForm({ user, onSubmit, onCancel }: UserFormProps) {
           onChange={(e) => setRole(e.target.value)}
           className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
         >
-          <option value="SUPERADMIN">SUPERADMIN</option>
-          <option value="USER">USER</option>
-          <option value="COMPANY">COMPANY</option>
+          <option value="1">SUPERADMIN</option>
+          <option value="2">USER</option>
+          <option value="3">COMPANY</option>
         </select>
       </div>
 
@@ -416,6 +463,93 @@ function UserForm({ user, onSubmit, onCancel }: UserFormProps) {
         </Button>
         <Button type="submit" className="flex-1 bg-blue-600 hover:bg-blue-700 text-white" disabled={createUser.isPending || updateUser.isPending}>
           {createUser.isPending || updateUser.isPending ? 'Saving...' : user ? 'Save Changes' : 'Create User'}
+        </Button>
+      </div>
+    </form>
+  );
+}
+
+// Change Password Form Component
+interface ChangePasswordFormProps {
+  userId: string;
+  onSubmit: () => void;
+  onCancel: () => void;
+}
+
+function ChangePasswordForm({ userId, onSubmit, onCancel }: ChangePasswordFormProps) {
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState<string>('');
+
+  const queryClient = useQueryClient();
+
+  const changePassword = useMutation({
+    mutationFn: (password: string) => userApi.changePassword(userId, password),
+    onSuccess: () => {
+      setError('');
+      setNewPassword('');
+      setConfirmPassword('');
+      onSubmit();
+    },
+    onError: (err: any) => {
+      const errorMessage = err?.response?.data?.message || err?.message || 'Failed to change password. Please try again.';
+      setError(errorMessage);
+      console.error('Change password error:', err);
+    },
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+
+    if (!newPassword || !confirmPassword) {
+      setError('Please fill in all fields');
+      return;
+    }
+
+    if (newPassword.length < 6) {
+      setError('Password must be at least 6 characters');
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+
+    changePassword.mutate(newPassword);
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      {error && (
+        <div className="p-3 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 text-sm">
+          {error}
+        </div>
+      )}
+
+      <Input
+        label="New Password"
+        type="password"
+        placeholder="Enter new password"
+        value={newPassword}
+        onChange={(e) => setNewPassword(e.target.value)}
+      />
+
+      <Input
+        label="Confirm Password"
+        type="password"
+        placeholder="Confirm password"
+        value={confirmPassword}
+        onChange={(e) => setConfirmPassword(e.target.value)}
+      />
+
+      <div className="flex gap-3 pt-4">
+        <Button type="button" variant="outline" onClick={onCancel} className="flex-1">
+          Cancel
+        </Button>
+        <Button type="submit" className="flex-1 bg-blue-600 hover:bg-blue-700 text-white" disabled={changePassword.isPending}>
+          {changePassword.isPending ? 'Changing...' : 'Change Password'}
         </Button>
       </div>
     </form>

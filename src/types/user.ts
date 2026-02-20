@@ -3,6 +3,7 @@ export interface User {
   username: string;
   email?: string;
   role_name: string;
+  role_id: number;
   permission_level?: string;
   active_until?: string | Date | null;
   created_at?: string | Date;
