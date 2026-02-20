@@ -26,7 +26,7 @@ class ApiClient {
       (error) => {
         if (error.response?.status === 401) {
           localStorage.removeItem('token');
-          window.location.href = '/login';
+          window.location.href = 'auth/login';
         }
         return Promise.reject(error);
       }
@@ -95,22 +95,26 @@ export const kmlApi = {
 
 export const authApi = {
   login: (username: string, password: string) =>
-    api.post<{ token: string; user: User }>('/auth/login', { username, password }),
-  logout: () => api.post('/auth/logout'),
-  me: () => api.get<User>('/auth/me'),
-  refreshToken: () => api.post<{ token: string }>('/auth/refresh'),
+    api.post<{ status: boolean; message: string; data: { token: string; user: User } }>('/check-login', { username, password }),
+  logout: () => api.post('/logout'),
+  confirmThatsNotMe: () => api.post('/confirm-thats-not-me'),
+  refreshToken: () => api.post<{ status: boolean; data: { token: string } }>('/auth/refresh'),
 };
 
 export const userApi = {
-  getAll: () => api.get<User[]>('/users'),
-  getById: (id: string) => api.get<User>(`/users/${id}`),
-  create: (data: Partial<User>) => api.post<User>('/users', data),
-  update: (id: string, data: Partial<User>) => api.put<User>(`/users/${id}`, data),
-  delete: (id: string) => api.delete(`/users/${id}`),
-  getActivity: (id: string) => api.get<UserActivity[]>(`/users/${id}/activity`),
+  getAll: async () => {
+    const response = await api.get<{ status: boolean; message: string; data: User[] }>('/get-all-users');
+    return response.data;
+  },
+  getById: (userId: string) => api.post<User>('/get-user', { user_id: userId }),
+  create: (data: Partial<User>) => api.post<User>('/create-user', data),
+  update: (userId: string, data: Partial<User>) => api.put<User>('/update-user', { user_id: userId, ...data }),
+  delete: (userId: string) => api.delete('/delete-user', { data: { user_id: userId } }),
+  changePassword: (userId: string, newPassword: string) => api.post('/change-user-password', { user_id: userId, new_password: newPassword }),
+  getRoles: () => api.get('/get-user-roles'),
 };
 
 // Import types
 import { Vessel, VesselTrack } from '@/types/vessel';
 import { POI, POICategory, KMLLayer } from '@/types/poi';
-import { User, UserActivity } from '@/types/user';
+import { User } from '@/types/user';

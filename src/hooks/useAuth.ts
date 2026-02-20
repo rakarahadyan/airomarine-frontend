@@ -13,9 +13,10 @@ export function useAuth() {
   const loginMutation = useMutation({
     mutationFn: ({ username, password }: { username: string; password: string }) =>
       authApi.login(username, password),
-    onSuccess: (data) => {
-      localStorage.setItem('token', data.token);
-      setAuth(data.user, data.token);
+    onSuccess: (response) => {
+      const { token, user } = response.data;
+      localStorage.setItem('token', token);
+      setAuth(user, token);
       router.push('/');
     },
   });
@@ -25,21 +26,14 @@ export function useAuth() {
     onSuccess: () => {
       localStorage.removeItem('token');
       clearAuth();
-      router.push('/login');
+      router.push('auth/login');
     },
     onError: () => {
       // Even if logout fails, clear local state
       localStorage.removeItem('token');
       clearAuth();
-      router.push('/login');
+      router.push('auth/login');
     },
-  });
-
-  const { data: currentUser, isLoading: isLoadingUser } = useQuery({
-    queryKey: ['current-user'],
-    queryFn: authApi.me,
-    enabled: isAuthenticated,
-    retry: false,
   });
 
   const login = useCallback(
@@ -54,9 +48,9 @@ export function useAuth() {
   }, [logoutMutation]);
 
   return {
-    user: currentUser || user,
+    user,
     isAuthenticated,
-    isLoading: loginMutation.isPending || isLoadingUser,
+    isLoading: loginMutation.isPending,
     isLoggingOut: logoutMutation.isPending,
     error: loginMutation.error,
     login,

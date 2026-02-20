@@ -15,7 +15,7 @@ import {
 } from '@heroicons/react/24/outline';
 import { cn } from '@/lib/utils';
 import { useSettingsStore } from '@/stores/settingsStore';
-import { useAuthStore } from '@/stores/authStore';
+import { useAuth } from '@/hooks/useAuth';
 
 // Custom Ship Icon since Heroicons doesn't have one
 const ShipIconCustom = ({ className }: { className?: string }) => (
@@ -38,7 +38,7 @@ const navigation = [
 export function Sidebar() {
   const pathname = usePathname();
   const { settings, toggleSidebar } = useSettingsStore();
-  const { logout, user } = useAuthStore();
+  const { logout, user } = useAuth();
   const collapsed = settings.sidebarCollapsed;
 
   return (
@@ -97,12 +97,12 @@ export function Sidebar() {
           <div className="flex items-center gap-3 px-3 py-2 mb-2">
             <div className="h-8 w-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
               <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
-                {user.fullName.charAt(0).toUpperCase()}
+                {(user.username)?.charAt(0).toUpperCase()}
               </span>
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
-                {user.fullName}
+                {user.username}
               </p>
               <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
                 {user.role}

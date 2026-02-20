@@ -1,19 +1,11 @@
 export interface User {
   id: string;
   username: string;
-  email: string;
-  fullName: string;
-  role: UserRole;
-  avatar?: string;
-  lastLogin?: Date;
-  isActive: boolean;
-  createdAt: Date;
-}
-
-export enum UserRole {
-  ADMIN = 'admin',
-  OPERATOR = 'operator',
-  VIEWER = 'viewer',
+  email?: string;
+  role_name: string;
+  permission_level?: string;
+  active_until?: string | Date | null;
+  created_at?: string | Date;
 }
 
 export interface UserActivity {
@@ -30,4 +22,11 @@ export interface AuthState {
   token: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
+}
+
+// Helper function to check if user is active
+export function isUserActive(user: User): boolean {
+  if (!user.active_until) return true; // Null means indefinitely active
+  const activeUntilDate = new Date(user.active_until);
+  return activeUntilDate > new Date();
 }
