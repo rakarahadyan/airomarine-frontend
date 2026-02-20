@@ -36,7 +36,7 @@ export function useVessels() {
 
   useEffect(() => {
     if (error) {
-      setError(error instanceof Error ? error. message : 'Failed to fetch vessels');
+      setError(error instanceof Error ? error.message : 'Failed to fetch vessels');
     }
   }, [error, setError]);
 
@@ -54,8 +54,8 @@ export function useVessels() {
 
 export function useVesselTrack(vesselId: string, from: Date, to: Date) {
   return useQuery({
-    queryKey: ['vessel-track', vesselId, from. toISOString(), to.toISOString()],
-    queryFn: () => vesselApi. getTrack(vesselId, from, to),
+    queryKey: ['vessel-track', vesselId, from.toISOString(), to.toISOString()],
+    queryFn: () => vesselApi.getTrack(vesselId, from, to),
     enabled: !!vesselId,
   });
 }

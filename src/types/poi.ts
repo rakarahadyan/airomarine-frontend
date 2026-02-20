@@ -24,7 +24,7 @@ export interface KMLLayer {
   id: string;
   name: string;
   fileName: string;
-  geoJson: GeoJSON. FeatureCollection;
+  geoJson: GeoJSON.FeatureCollection;
   isVisible: boolean;
   color?: string;
 }

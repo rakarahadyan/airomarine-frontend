@@ -2,7 +2,7 @@ import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { CoordinateDMS } from '@/types/map';
 
-export function cn(... inputs: ClassValue[]) {
+export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
@@ -43,7 +43,7 @@ export function convertToDMS(decimal: number, isLatitude: boolean): CoordinateDM
 }
 
 export function formatDMS(dms: CoordinateDMS): string {
-  return `${dms.degrees}° ${dms. minutes}' ${dms.seconds.toFixed(2)}" ${dms.direction}`;
+  return `${dms.degrees}° ${dms.minutes}' ${dms.seconds.toFixed(2)}" ${dms.direction}`;
 }
 
 export function formatCoordinates(lat: number, lng: number, useDMS: boolean = false): string {
@@ -110,7 +110,7 @@ export function calculateBearing(
     Math.cos(lat1Rad) * Math.sin(lat2Rad) -
     Math.sin(lat1Rad) * Math.cos(lat2Rad) * Math.cos(dLng);
 
-  let bearing = toDeg(Math. atan2(y, x));
+  let bearing = toDeg(Math.atan2(y, x));
   return (bearing + 360) % 360;
 }
 
@@ -128,9 +128,9 @@ export function calculateDistance(
 
   const a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math. cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
+    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
 
-  const c = 2 * Math. atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
 }
 

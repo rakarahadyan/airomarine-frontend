@@ -1,5 +1,6 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import { Sidebar } from './Sidebar';
 import { useSettingsStore } from '@/stores/settingsStore';
 import { cn } from '@/lib/utils';
@@ -11,6 +12,13 @@ interface NavigationProps {
 export function Navigation({ children }: NavigationProps) {
   const { settings } = useSettingsStore();
   const collapsed = settings.sidebarCollapsed;
+  const pathname = usePathname();
+
+  const isAuthRoute = pathname?.startsWith('/auth');
+
+  if (isAuthRoute) {
+    return <>{children}</>;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">

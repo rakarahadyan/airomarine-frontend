@@ -7,7 +7,7 @@ import {
   SunIcon,
   MoonIcon,
 } from '@heroicons/react/24/outline';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/Input';
 import { useSettingsStore } from '@/stores/settingsStore';
 import { useVesselStore } from '@/stores/vesselStore';
@@ -33,7 +33,7 @@ export function Header({ title = 'Dashboard' }: HeaderProps) {
     if (newTheme === 'dark') {
       document.documentElement.classList.add('dark');
     } else {
-      document. documentElement.classList.remove('dark');
+      document.documentElement.classList.remove('dark');
     }
   };
 
@@ -53,7 +53,7 @@ export function Header({ title = 'Dashboard' }: HeaderProps) {
               type="search"
               placeholder="Search vessels..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target. value)}
+              onChange={(e) => setSearchQuery(e.target.value)}
               leftIcon={<MagnifyingGlassIcon className="h-5 w-5" />}
               className="w-64"
             />
@@ -64,7 +64,7 @@ export function Header({ title = 'Dashboard' }: HeaderProps) {
             onClick={toggleTheme}
             className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-400"
           >
-            {settings. theme === 'dark' ? (
+            {settings.theme === 'dark' ? (
               <SunIcon className="h-5 w-5" />
             ) : (
               <MoonIcon className="h-5 w-5" />

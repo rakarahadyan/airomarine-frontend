@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import { Header } from '@/components/layout/Header';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
-import { Toggle } from '@/components/ui/Toggle';
+import { Button } from '@/components/ui/button';
+import { Toggle } from '@/components/ui/toggle';
 import { useSettingsStore } from '@/stores/settingsStore';
 import { useMapStore } from '@/stores/mapStore';
 import { MapType } from '@/types/map';

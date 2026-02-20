@@ -4,11 +4,11 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Input } from '@/components/ui/Input';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { POI, POICategory } from '@/types/poi';
 
-const poiSchema = z. object({
-  name: z.string(). min(1, 'Name is required'),
+const poiSchema = z.object({
+  name: z.string().min(1, 'Name is required'),
   description: z.string().optional(),
   latitude: z.number().min(-90).max(90),
   longitude: z.number().min(-180).max(180),
@@ -38,10 +38,10 @@ export function POIForm({ poi, categories, onSubmit, onCancel, isLoading }: POIF
     defaultValues: poi
       ?  {
           name: poi.name,
-          description: poi. description,
+          description: poi.description,
           latitude: poi.latitude,
           longitude: poi.longitude,
-          categoryId: poi. category. id,
+          categoryId: poi.category.id,
           icon: poi.icon,
           color: poi.color,
         }
@@ -57,7 +57,7 @@ export function POIForm({ poi, categories, onSubmit, onCancel, isLoading }: POIF
       <Input
         label="Name"
         {...register('name')}
-        error={errors.name?. message}
+        error={errors.name?.message}
         placeholder="Enter POI name"
       />
 
@@ -66,7 +66,7 @@ export function POIForm({ poi, categories, onSubmit, onCancel, isLoading }: POIF
           Description
         </label>
         <textarea
-          {... register('description')}
+          {...register('description')}
           className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           rows={3}
           placeholder="Enter description (optional)"
@@ -97,11 +97,11 @@ export function POIForm({ poi, categories, onSubmit, onCancel, isLoading }: POIF
           Category
         </label>
         <select
-          {... register('categoryId')}
+          {...register('categoryId')}
           className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         >
           <option value="">Select category</option>
-          {categories. map((cat) => (
+          {categories.map((cat) => (
             <option key={cat.id} value={cat.id}>
               {cat.icon} {cat.name}
             </option>
@@ -117,7 +117,7 @@ export function POIForm({ poi, categories, onSubmit, onCancel, isLoading }: POIF
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
             Icon (Emoji)
           </label>
-          <Input {... register('icon')} placeholder="📍" />
+          <Input {...register('icon')} placeholder="📍" />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
@@ -130,7 +130,7 @@ export function POIForm({ poi, categories, onSubmit, onCancel, isLoading }: POIF
               className="h-10 w-14 rounded-lg border border-gray-300 dark:border-gray-600 cursor-pointer"
             />
             <Input
-              {... register('color')}
+              {...register('color')}
               placeholder="#3388ff"
               className="flex-1"
             />

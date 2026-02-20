@@ -30,7 +30,7 @@ export function CoordinateDisplay({ map }: CoordinateDisplayProps) {
   return (
     <div className="coordinate-display">
       <span className="text-gray-700 dark:text-gray-300">
-        {formatCoordinates(coordinates. lat, coordinates.lng, settings.showCoordinatesInDMS)}
+        {formatCoordinates(coordinates.lat, coordinates.lng, settings.showCoordinatesInDMS)}
       </span>
     </div>
   );

@@ -6,13 +6,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { Input } from '@/components/ui/Input';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
 import { useAuth } from '@/hooks/useAuth';
 
 const loginSchema = z.object({
   username: z.string().min(1, 'Username is required'),
-  password: z. string().min(1, 'Password is required'),
+  password: z.string().min(1, 'Password is required'),
 });
 
 type LoginFormData = z.infer<typeof loginSchema>;
@@ -52,7 +52,7 @@ export default function LoginPage() {
           {error && (
             <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
               <p className="text-sm text-red-600 dark:text-red-400">
-                {error instanceof Error ? error.message : 'Login failed.  Please try again.'}
+                {error instanceof Error ? error.message : 'Login failed. Please try again.'}
               </p>
             </div>
           )}
@@ -60,7 +60,7 @@ export default function LoginPage() {
           <Input
             label="Username"
             {...register('username')}
-            error={errors. username?.message}
+            error={errors.username?.message}
             placeholder="Enter your username"
             autoComplete="username"
           />
@@ -68,7 +68,7 @@ export default function LoginPage() {
           <Input
             label="Password"
             type={showPassword ? 'text' : 'password'}
-            {... register('password')}
+            {...register('password')}
             error={errors.password?.message}
             placeholder="Enter your password"
             autoComplete="current-password"

@@ -1,6 +1,6 @@
 export const MAP_TILES = {
   openstreetmap: {
-    url: 'https://{s}.tile. openstreetmap. org/{z}/{x}/{y}.png',
+    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     attribution: '© OpenStreetMap contributors',
   },
   googleStreets: {
@@ -12,7 +12,7 @@ export const MAP_TILES = {
     attribution: '© Google Maps',
   },
   googleHybrid: {
-    url: 'https://mt1.google. com/vt/lyrs=y&x={x}&y={y}&z={z}',
+    url: 'https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',
     attribution: '© Google Maps',
   },
   marineCharts: {

@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import { Header } from '@/components/layout/Header';
 import { Card, CardContent } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
-import { Modal } from '@/components/ui/Modal';
+import { Button } from '@/components/ui/button';
+import { Modal } from '@/components/ui/modal';
 import { POIList } from '@/components/poi/POIList';
 import { POIForm } from '@/components/poi/POIForm';
 import { MapContainer } from '@/components/map/MapContainer';
@@ -38,14 +38,14 @@ export default function POIPage() {
 
   const handleDeletePOI = (poi: POI) => {
     if (confirm(`Are you sure you want to delete "${poi.name}"? `)) {
-      deletePOI. mutate(poi. id);
+      deletePOI.mutate(poi.id);
     }
   };
 
   const handleToggleVisibility = (poi: POI) => {
     updatePOI.mutate({
       id: poi.id,
-      data: { isVisible: !poi. isVisible },
+      data: { isVisible: !poi.isVisible },
     });
   };
 
@@ -77,7 +77,7 @@ export default function POIPage() {
               Add POI
             </Button>
             <span className="text-sm text-gray-500 dark:text-gray-400">
-              {pois. length} POIs
+              {pois.length} POIs
             </span>
           </div>
 
@@ -85,7 +85,7 @@ export default function POIPage() {
             <div className="flex bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
               <button
                 onClick={() => setViewMode('split')}
-                className={`px-3 py-1. 5 rounded text-sm ${
+                className={`px-3 py-1.5 rounded text-sm ${
                   viewMode === 'split' ? 'bg-white dark:bg-gray-600 shadow' : ''
                 }`}
               >

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { MagnifyingGlassIcon, FunnelIcon } from '@heroicons/react/24/outline';
 import { Input } from '@/components/ui/Input';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { VesselCard } from './VesselCard';
 import { useVesselStore } from '@/stores/vesselStore';
 import { VesselType } from '@/types/vessel';
@@ -26,7 +26,7 @@ export function VesselList() {
       ? selectedTypes.filter((t) => t !== type)
       : [...selectedTypes, type];
     setSelectedTypes(newTypes);
-    setFilter({ types: newTypes. length > 0 ? newTypes : undefined });
+    setFilter({ types: newTypes.length > 0 ? newTypes : undefined });
   };
 
   const vesselTypes = Object.values(VesselType);
@@ -92,7 +92,7 @@ export function VesselList() {
           <div className="divide-y divide-gray-200 dark:divide-gray-700">
             {vessels.map((vessel) => (
               <VesselCard
-                key={vessel. id}
+                key={vessel.id}
                 vessel={vessel}
                 onClick={() => selectVessel(vessel)}
               />

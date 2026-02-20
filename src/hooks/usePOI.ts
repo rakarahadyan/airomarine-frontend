@@ -22,7 +22,7 @@ export function useCreatePOI() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: Partial<POI>) => poiApi. create(data),
+    mutationFn: (data: Partial<POI>) => poiApi.create(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['pois'] });
     },
@@ -36,7 +36,7 @@ export function useUpdatePOI() {
     mutationFn: ({ id, data }: { id: string; data: Partial<POI> }) =>
       poiApi.update(id, data),
     onSuccess: () => {
-      queryClient. invalidateQueries({ queryKey: ['pois'] });
+      queryClient.invalidateQueries({ queryKey: ['pois'] });
     },
   });
 }
@@ -45,7 +45,7 @@ export function useDeletePOI() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (id: string) => poiApi. delete(id),
+    mutationFn: (id: string) => poiApi.delete(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['pois'] });
     },

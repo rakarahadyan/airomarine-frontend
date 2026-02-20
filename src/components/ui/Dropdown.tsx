@@ -22,7 +22,7 @@ interface DropdownProps {
 export function Dropdown({ trigger, items, align = 'right' }: DropdownProps) {
   return (
     <Menu as="div" className="relative inline-block text-left">
-      <Menu.Button as={Fragment}>{trigger}</Menu. Button>
+      <Menu.Button as={Fragment}>{trigger}</Menu.Button>
 
       <Transition
         as={Fragment}
@@ -49,13 +49,13 @@ export function Dropdown({ trigger, items, align = 'right' }: DropdownProps) {
                     className={cn(
                       'flex w-full items-center gap-2 px-4 py-2 text-sm',
                       active && 'bg-gray-100 dark:bg-gray-700',
-                      item. danger
+                      item.danger
                         ? 'text-red-600 dark:text-red-400'
                         : 'text-gray-700 dark:text-gray-200',
                       item.disabled && 'opacity-50 cursor-not-allowed'
                     )}
                   >
-                    {item. icon}
+                    {item.icon}
                     {item.label}
                   </button>
                 )}

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { PlusIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { Input } from '@/components/ui/Input';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { POI } from '@/types/poi';
 import { formatDate } from '@/lib/utils';
 
@@ -26,10 +26,10 @@ export function POIList({
 }: POIListProps) {
   const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredPOIs = pois. filter(
+  const filteredPOIs = pois.filter(
     (poi) =>
       poi.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      poi. description?. toLowerCase().includes(searchQuery.toLowerCase())
+      poi.description?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -56,7 +56,7 @@ export function POIList({
 
       {/* POI count */}
       <div className="px-4 py-2 text-sm text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-700">
-        {filteredPOIs. length} POIs
+        {filteredPOIs.length} POIs
       </div>
 
       {/* POI list */}
@@ -69,7 +69,7 @@ export function POIList({
           <div className="divide-y divide-gray-200 dark:divide-gray-700">
             {filteredPOIs.map((poi) => (
               <div
-                key={poi. id}
+                key={poi.id}
                 className="p-4 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer"
                 onClick={() => onSelect(poi)}
               >
@@ -91,7 +91,7 @@ export function POIList({
                           onToggleVisibility(poi);
                         }}
                         className={`p-1 rounded ${
-                          poi. isVisible
+                          poi.isVisible
                             ?  'text-green-600'
                             : 'text-gray-400'
                         }`}

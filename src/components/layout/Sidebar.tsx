@@ -20,7 +20,7 @@ import { useAuthStore } from '@/stores/authStore';
 // Custom Ship Icon since Heroicons doesn't have one
 const ShipIconCustom = ({ className }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <path d="M2 21l. 5-2.5a2 2 0 011.94-1.5H19a2 2 0 011.94 1.5L21 21" />
+    <path d="M2 21l.5-2.5a2 2 0 011.94-1.5H19a2 2 0 011.94 1.5L21 21" />
     <path d="M12 3v9" />
     <path d="M5 12l7-4 7 4" />
     <path d="M5 12v4a8 8 0 008 0 8 8 0 008 0v-4" />
@@ -29,10 +29,10 @@ const ShipIconCustom = ({ className }: { className?: string }) => (
 
 const navigation = [
   { name: 'Map', href: '/dashboard', icon: MapIcon },
-  { name: 'Vessels', href: '/dashboard/vessels', icon: ShipIconCustom },
-  { name: 'POI', href: '/dashboard/poi', icon: MapPinIcon },
-  { name: 'Users', href: '/dashboard/users', icon: UsersIcon },
-  { name: 'Settings', href: '/dashboard/settings', icon: Cog6ToothIcon },
+  { name: 'Vessels', href: '/vessels', icon: ShipIconCustom },
+  { name: 'POI', href: '/poi', icon: MapPinIcon },
+  { name: 'Users', href: '/users', icon: UsersIcon },
+  { name: 'Settings', href: '/settings', icon: Cog6ToothIcon },
 ];
 
 export function Sidebar() {
@@ -69,14 +69,14 @@ export function Sidebar() {
 
       {/* Navigation */}
       <nav className="flex flex-col gap-1 p-2 mt-4">
-        {navigation. map((item) => {
+        {navigation.map((item) => {
           const isActive = pathname === item.href;
           return (
             <Link
               key={item.name}
               href={item.href}
               className={cn(
-                'flex items-center gap-3 rounded-lg px-3 py-2. 5 text-sm font-medium transition-colors',
+                'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
                 isActive
                   ? 'bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400'
                   : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700',
@@ -97,7 +97,7 @@ export function Sidebar() {
           <div className="flex items-center gap-3 px-3 py-2 mb-2">
             <div className="h-8 w-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
               <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
-                {user.fullName. charAt(0).toUpperCase()}
+                {user.fullName.charAt(0).toUpperCase()}
               </span>
             </div>
             <div className="flex-1 min-w-0">
@@ -114,7 +114,7 @@ export function Sidebar() {
         <button
           onClick={() => logout()}
           className={cn(
-            'flex items-center gap-3 rounded-lg px-3 py-2. 5 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 w-full transition-colors',
+            'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 w-full transition-colors',
             collapsed && 'justify-center px-2'
           )}
           title={collapsed ? 'Logout' : undefined}

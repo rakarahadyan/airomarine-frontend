@@ -11,8 +11,8 @@ const mapTypes = [
   { id: MapType.OPENSTREETMAP, name: 'OpenStreetMap', description: 'Standard map' },
   { id: MapType.GOOGLE_STREETS, name: 'Google Streets', description: 'Google road map' },
   { id: MapType.GOOGLE_SATELLITE, name: 'Google Satellite', description: 'Satellite imagery' },
-  { id: MapType. GOOGLE_HYBRID, name: 'Google Hybrid', description: 'Satellite with labels' },
-  { id: MapType. MARINE_CHARTS, name: 'Marine Charts', description: 'OpenSeaMap nautical' },
+  { id: MapType.GOOGLE_HYBRID, name: 'Google Hybrid', description: 'Satellite with labels' },
+  { id: MapType.MARINE_CHARTS, name: 'Marine Charts', description: 'OpenSeaMap nautical' },
 ];
 
 export function LayerSwitcher() {
@@ -63,7 +63,7 @@ export function LayerSwitcher() {
                       )}
                     </button>
                   )}
-                </Menu. Item>
+                </Menu.Item>
               ))}
             </div>
           </Menu.Items>

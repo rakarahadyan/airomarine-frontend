@@ -44,8 +44,8 @@ export const useSettingsStore = create<SettingsStore>()(
       toggleSidebar: () =>
         set((state) => ({
           settings: {
-            ...state. settings,
-            sidebarCollapsed: !state.settings. sidebarCollapsed,
+            ...state.settings,
+            sidebarCollapsed: !state.settings.sidebarCollapsed,
           },
         })),
 
@@ -57,8 +57,8 @@ export const useSettingsStore = create<SettingsStore>()(
       updateNotifications: (notifications) =>
         set((state) => ({
           settings: {
-            ...state. settings,
-            notifications: { ...state. settings.notifications, ... notifications },
+            ...state.settings,
+            notifications: { ...state.settings.notifications, ...notifications },
           },
         })),
     }),

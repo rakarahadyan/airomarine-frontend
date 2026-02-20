@@ -70,16 +70,16 @@ export const useMapStore = create<MapStore>()(
 
       addShape: (shape) =>
         set((state) => ({
-          shapes: [...state. shapes, shape],
+          shapes: [...state.shapes, shape],
         })),
       removeShape: (id) =>
         set((state) => ({
-          shapes: state.shapes. filter((s) => s.id !== id),
+          shapes: state.shapes.filter((s) => s.id !== id),
         })),
       updateShape: (id, shapeData) =>
         set((state) => ({
-          shapes: state.shapes. map((s) =>
-            s.id === id ? { ... s, ...shapeData } : s
+          shapes: state.shapes.map((s) =>
+            s.id === id ? { ...s, ...shapeData } : s
           ),
         })),
       clearShapes: () => set({ shapes: [] }),
@@ -90,8 +90,8 @@ export const useMapStore = create<MapStore>()(
       name: 'map-storage',
       partialize: (state) => ({
         settings: state.settings,
-        drawingSettings: state. drawingSettings,
-        shapes: state. shapes,
+        drawingSettings: state.drawingSettings,
+        shapes: state.shapes,
       }),
     }
   )

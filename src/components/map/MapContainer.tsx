@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { Loading } from '@/components/ui/Loading';
+import { Loading } from '@/components/ui/loading';
 
 // Dynamic import untuk menghindari SSR issues dengan Leaflet
 const MapContent = dynamic(() => import('./MapContent'), {

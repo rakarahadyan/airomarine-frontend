@@ -32,18 +32,18 @@ export const useVesselStore = create<VesselStore>((set, get) => ({
   
   updateVessel: (vessel) =>
     set((state) => ({
-      vessels: state. vessels.map((v) =>
+      vessels: state.vessels.map((v) =>
         v.id === vessel.id ?  vessel : v
       ),
       selectedVessel:
-        state.selectedVessel?. id === vessel.id ?  vessel : state.selectedVessel,
+        state.selectedVessel?.id === vessel.id ?  vessel : state.selectedVessel,
     })),
 
   selectVessel: (vessel) => set({ selectedVessel: vessel }),
   
   setFilter: (newFilter) =>
     set((state) => ({
-      filter: { ... state.filter, ... newFilter },
+      filter: { ...state.filter, ...newFilter },
     })),
   
   clearFilter: () => set({ filter: {} }),
@@ -58,13 +58,13 @@ export const useVesselStore = create<VesselStore>((set, get) => ({
     return vessels.filter((vessel) => {
       // Filter by type
       if (filter.types && filter.types.length > 0) {
-        if (!filter. types.includes(vessel.shipType)) {
+        if (!filter.types.includes(vessel.shipType)) {
           return false;
         }
       }
 
       // Filter by status
-      if (filter.status && filter.status. length > 0) {
+      if (filter.status && filter.status.length > 0) {
         if (! filter.status.includes(vessel.navStatus)) {
           return false;
         }
@@ -73,9 +73,9 @@ export const useVesselStore = create<VesselStore>((set, get) => ({
       // Filter by search query
       if (filter.searchQuery) {
         const query = filter.searchQuery.toLowerCase();
-        const matchesName = vessel.name. toLowerCase().includes(query);
-        const matchesMMSI = vessel. mmsi.includes(query);
-        const matchesCallSign = vessel.callSign?. toLowerCase().includes(query);
+        const matchesName = vessel.name.toLowerCase().includes(query);
+        const matchesMMSI = vessel.mmsi.includes(query);
+        const matchesCallSign = vessel.callSign?.toLowerCase().includes(query);
         if (!matchesName && !matchesMMSI && !matchesCallSign) {
           return false;
         }
@@ -83,10 +83,10 @@ export const useVesselStore = create<VesselStore>((set, get) => ({
 
       // Filter by bounds
       if (filter.bounds) {
-        const { north, south, east, west } = filter. bounds;
+        const { north, south, east, west } = filter.bounds;
         if (
           vessel.latitude < south ||
-          vessel. latitude > north ||
+          vessel.latitude > north ||
           vessel.longitude < west ||
           vessel.longitude > east
         ) {

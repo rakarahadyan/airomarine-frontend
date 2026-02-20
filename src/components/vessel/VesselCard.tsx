@@ -26,13 +26,13 @@ export function VesselCard({ vessel, onClick, isSelected }: VesselCardProps) {
         {/* Vessel icon */}
         <div
           className="h-10 w-10 rounded-lg flex items-center justify-center shrink-0"
-          style={{ backgroundColor: getVesselColor(vessel. shipType) + '20' }}
+          style={{ backgroundColor: getVesselColor(vessel.shipType) + '20' }}
         >
           <svg
             className="h-6 w-6"
             viewBox="0 0 24 24"
             fill={getVesselColor(vessel.shipType)}
-            style={{ transform: `rotate(${vessel. heading}deg)` }}
+            style={{ transform: `rotate(${vessel.heading}deg)` }}
           >
             <path d="M12 2L4 20h16L12 2z" />
           </svg>
@@ -58,7 +58,7 @@ export function VesselCard({ vessel, onClick, isSelected }: VesselCardProps) {
               <span className="text-gray-400">SPD:</span> {formatSpeed(vessel.speed)}
             </span>
             <span className="text-gray-600 dark:text-gray-300">
-              <span className="text-gray-400">COG:</span> {formatCourse(vessel. course)}
+              <span className="text-gray-400">COG:</span> {formatCourse(vessel.course)}
             </span>
             <span className="text-gray-600 dark:text-gray-300">
               <span className="text-gray-400">HDG:</span> {formatCourse(vessel.heading)}

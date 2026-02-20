@@ -15,8 +15,8 @@ export function useAuth() {
       authApi.login(username, password),
     onSuccess: (data) => {
       localStorage.setItem('token', data.token);
-      setAuth(data. user, data.token);
-      router. push('/');
+      setAuth(data.user, data.token);
+      router.push('/');
     },
   });
 
@@ -25,11 +25,11 @@ export function useAuth() {
     onSuccess: () => {
       localStorage.removeItem('token');
       clearAuth();
-      router. push('/login');
+      router.push('/login');
     },
     onError: () => {
       // Even if logout fails, clear local state
-      localStorage. removeItem('token');
+      localStorage.removeItem('token');
       clearAuth();
       router.push('/login');
     },

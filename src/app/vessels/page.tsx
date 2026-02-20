@@ -3,10 +3,10 @@
 import { useState } from 'react';
 import { Header } from '@/components/layout/Header';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/Input';
 import { Badge } from '@/components/ui/Badge';
-import { Modal } from '@/components/ui/Modal';
+import { Modal } from '@/components/ui/modal';
 import { VesselDetails } from '@/components/vessel/VesselDetails';
 import { useVesselStore } from '@/stores/vesselStore';
 import { useVessels } from '@/hooks/useVessels';
@@ -46,15 +46,15 @@ export default function VesselsPage() {
   const handleExport = () => {
     // Export vessels to CSV
     const csv = [
-      ['Name', 'MMSI', 'Type', 'Speed', 'Course', 'Latitude', 'Longitude', 'Last Update']. join(','),
+      ['Name', 'MMSI', 'Type', 'Speed', 'Course', 'Latitude', 'Longitude', 'Last Update'].join(','),
       ...vessels.map((v) =>
-        [v.name, v. mmsi, v. shipType, v.speed, v. course, v.latitude, v.longitude, v.lastUpdate].join(',')
+        [v.name, v.mmsi, v.shipType, v.speed, v.course, v.latitude, v.longitude, v.lastUpdate].join(',')
       ),
     ].join('\n');
 
     const blob = new Blob([csv], { type: 'text/csv' });
     const url = URL.createObjectURL(blob);
-    const a = document. createElement('a');
+    const a = document.createElement('a');
     a.href = url;
     a.download = 'vessels.csv';
     a.click();
@@ -90,7 +90,7 @@ export default function VesselsPage() {
                 <div>
                   <p className="text-sm text-gray-500 dark:text-gray-400">Moving</p>
                   <p className="text-2xl font-bold text-green-600">
-                    {vessels.filter((v) => v. speed > 0.5).length}
+                    {vessels.filter((v) => v.speed > 0.5).length}
                   </p>
                 </div>
                 <div className="h-12 w-12 rounded-lg bg-green-100 dark:bg-green-900/20 flex items-center justify-center">
@@ -203,7 +203,7 @@ export default function VesselsPage() {
                         <div className="flex items-center gap-3">
                           <div
                             className="h-8 w-8 rounded-lg flex items-center justify-center"
-                            style={{ backgroundColor: getVesselColor(vessel. shipType) + '20' }}
+                            style={{ backgroundColor: getVesselColor(vessel.shipType) + '20' }}
                           >
                             <svg
                               className="h-5 w-5"
@@ -251,7 +251,7 @@ export default function VesselsPage() {
         {viewMode === 'grid' && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {vessels.map((vessel) => (
-              <Card key={vessel. id} className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => handleViewDetails(vessel)}>
+              <Card key={vessel.id} className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => handleViewDetails(vessel)}>
                 <CardContent className="pt-6">
                   <div className="flex items-start gap-3 mb-4">
                     <div
@@ -262,7 +262,7 @@ export default function VesselsPage() {
                         className="h-7 w-7"
                         viewBox="0 0 24 24"
                         fill={getVesselColor(vessel.shipType)}
-                        style={{ transform: `rotate(${vessel. heading}deg)` }}
+                        style={{ transform: `rotate(${vessel.heading}deg)` }}
                       >
                         <path d="M12 2L4 20h16L12 2z" />
                       </svg>

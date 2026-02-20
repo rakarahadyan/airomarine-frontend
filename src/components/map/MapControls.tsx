@@ -30,7 +30,7 @@ export function MapControls({ map }: MapControlsProps) {
   };
 
   const handleResetView = () => {
-    map?. setView([-6.2088, 106.8456], 10);
+    map?.setView([-6.2088, 106.8456], 10);
   };
 
   const toggleFullscreen = () => {
@@ -110,7 +110,7 @@ export function MapControls({ map }: MapControlsProps) {
             className={cn(
               'p-2 hover:bg-gray-100 dark:hover:bg-gray-700 w-full',
               index < drawingTools.length - 1 && 'border-b border-gray-200 dark:border-gray-700',
-              currentDrawingTool === tool. id && 'bg-blue-100 dark:bg-blue-900'
+              currentDrawingTool === tool.id && 'bg-blue-100 dark:bg-blue-900'
             )}
             title={tool.label}
           >

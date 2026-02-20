@@ -35,7 +35,7 @@ export function Modal({
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={onClose}>
-        <Transition. Child
+        <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
           enterFrom="opacity-0"
@@ -93,7 +93,7 @@ export function Modal({
                 )}
                 {children}
               </Dialog.Panel>
-            </Transition. Child>
+            </Transition.Child>
           </div>
         </div>
       </Dialog>

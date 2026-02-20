@@ -34,7 +34,7 @@ export function Toggle({
   };
 
   return (
-    <Switch. Group as="div" className="flex items-center justify-between">
+    <Switch.Group as="div" className="flex items-center justify-between">
       {(label || description) && (
         <span className="flex flex-col">
           {label && (
@@ -49,7 +49,7 @@ export function Toggle({
           {description && (
             <Switch.Description as="span" className="text-sm text-gray-500 dark:text-gray-400">
               {description}
-            </Switch. Description>
+            </Switch.Description>
           )}
         </span>
       )}
@@ -61,7 +61,7 @@ export function Toggle({
           'relative inline-flex shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2',
           enabled ?  'bg-blue-600' : 'bg-gray-200 dark:bg-gray-700',
           disabled && 'opacity-50 cursor-not-allowed',
-          sizes[size]. switch
+          sizes[size].switch
         )}
       >
         <span
@@ -72,6 +72,6 @@ export function Toggle({
           )}
         />
       </Switch>
-    </Switch. Group>
+    </Switch.Group>
   );
 }

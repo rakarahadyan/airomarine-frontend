@@ -2,7 +2,7 @@
 
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { Vessel } from '@/types/vessel';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/Badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import {
@@ -34,7 +34,7 @@ export function VesselDetails({ vessel, onClose, onTrack }: VesselDetailsProps) 
             <svg
               className="h-8 w-8"
               viewBox="0 0 24 24"
-              fill={getVesselColor(vessel. shipType)}
+              fill={getVesselColor(vessel.shipType)}
             >
               <path d="M12 2L4 20h16L12 2z" />
             </svg>
@@ -58,7 +58,7 @@ export function VesselDetails({ vessel, onClose, onTrack }: VesselDetailsProps) 
         {/* Status */}
         <div className="flex items-center gap-2">
           <Badge variant={statusVariant}>
-            {vessel. speed > 0.5 ? 'Moving' : 'Stationary'}
+            {vessel.speed > 0.5 ? 'Moving' : 'Stationary'}
           </Badge>
           <Badge variant="default">
             {getNavigationStatusText(vessel.navStatus)}
@@ -71,7 +71,7 @@ export function VesselDetails({ vessel, onClose, onTrack }: VesselDetailsProps) 
             Position
           </h4>
           <p className="font-mono text-sm text-gray-900 dark:text-white">
-            {formatCoordinates(vessel. latitude, vessel.longitude, true)}
+            {formatCoordinates(vessel.latitude, vessel.longitude, true)}
           </p>
         </div>
 
@@ -109,7 +109,7 @@ export function VesselDetails({ vessel, onClose, onTrack }: VesselDetailsProps) 
               <span className="text-gray-900 dark:text-white">{vessel.callSign}</span>
             </div>
           )}
-          {vessel. imo && (
+          {vessel.imo && (
             <div className="flex justify-between text-sm">
               <span className="text-gray-500 dark:text-gray-400">IMO</span>
               <span className="text-gray-900 dark:text-white">{vessel.imo}</span>
@@ -145,7 +145,7 @@ export function VesselDetails({ vessel, onClose, onTrack }: VesselDetailsProps) 
 
         {/* Last update */}
         <p className="text-xs text-gray-400 dark:text-gray-500">
-          Last updated: {formatDate(vessel. lastUpdate)}
+          Last updated: {formatDate(vessel.lastUpdate)}
         </p>
 
         {/* Actions */}

@@ -88,23 +88,23 @@ src/
 
 ### Installation
 
-1. Clone the repository:
+1.Clone the repository:
 ```bash
 git clone https://github.com/rakarahadyan/airomarine-frontend.git
 cd airomarine-frontend
 ```
 
-2. Install dependencies:
+2.Install dependencies:
 ```bash
 yarn install
 ```
 
-3. Run the development server:
+3.Run the development server:
 ```bash
 yarn dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
+4.Open [http://localhost:3000](http://localhost:3000) in your browser
 
 ## 📜 Available Scripts
 
@@ -115,7 +115,7 @@ yarn dev
 
 ## 🎨 UI Components
 
-The project uses shadcn/ui for component library. To add new components:
+The project uses shadcn/ui for component library.To add new components:
 
 ```bash
 npx shadcn@latest add [component-name]
@@ -138,7 +138,7 @@ The application supports multiple map tile layers configured in `src/lib/constan
 
 ## 🔐 Authentication
 
-The application uses token-based authentication stored in Zustand. Configure your API endpoint in `src/lib/api.ts`.
+The application uses token-based authentication stored in Zustand.Configure your API endpoint in `src/lib/api.ts`.
 
 ## 📊 State Management
 
@@ -173,11 +173,11 @@ Real-time vessel updates are handled through WebSocket connections (configured i
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+1.Fork the repository
+2.Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3.Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4.Push to the branch (`git push origin feature/AmazingFeature`)
+5.Open a Pull Request
 
 ## 👥 Authors
 

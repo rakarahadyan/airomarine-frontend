@@ -13,11 +13,11 @@ const WS_URL = process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:8080/ws';
 
 export function useWebSocket() {
   const wsRef = useRef<WebSocket | null>(null);
-  const reconnectTimeoutRef = useRef<NodeJS. Timeout>();
+  const reconnectTimeoutRef = useRef<NodeJS.Timeout>();
   const { updateVessel, setVessels } = useVesselStore();
 
   const connect = useCallback(() => {
-    if (wsRef.current?. readyState === WebSocket.OPEN) return;
+    if (wsRef.current?.readyState === WebSocket.OPEN) return;
 
     const ws = new WebSocket(WS_URL);
 
@@ -25,9 +25,9 @@ export function useWebSocket() {
       console.log('WebSocket connected');
     };
 
-    ws. onmessage = (event) => {
+    ws.onmessage = (event) => {
       try {
-        const message: WebSocketMessage = JSON.parse(event. data);
+        const message: WebSocketMessage = JSON.parse(event.data);
 
         switch (message.type) {
           case 'vessel_update':
@@ -52,7 +52,7 @@ export function useWebSocket() {
 
     ws.onclose = () => {
       console.log('WebSocket disconnected, reconnecting...');
-      reconnectTimeoutRef. current = setTimeout(connect, 3000);
+      reconnectTimeoutRef.current = setTimeout(connect, 3000);
     };
 
     ws.onerror = (error) => {
@@ -64,15 +64,15 @@ export function useWebSocket() {
   }, [updateVessel]);
 
   const disconnect = useCallback(() => {
-    if (reconnectTimeoutRef. current) {
+    if (reconnectTimeoutRef.current) {
       clearTimeout(reconnectTimeoutRef.current);
     }
-    wsRef.current?. close();
+    wsRef.current?.close();
     wsRef.current = null;
   }, []);
 
   const sendMessage = useCallback((message: object) => {
-    if (wsRef. current?. readyState === WebSocket.OPEN) {
+    if (wsRef.current?.readyState === WebSocket.OPEN) {
       wsRef.current.send(JSON.stringify(message));
     }
   }, []);
@@ -83,7 +83,7 @@ export function useWebSocket() {
   }, [connect, disconnect]);
 
   return {
-    isConnected: wsRef.current?.readyState === WebSocket. OPEN,
+    isConnected: wsRef.current?.readyState === WebSocket.OPEN,
     sendMessage,
     reconnect: connect,
   };

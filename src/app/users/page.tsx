@@ -3,10 +3,10 @@
 import { useState } from 'react';
 import { Header } from '@/components/layout/Header';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/Input';
 import { Badge } from '@/components/ui/Badge';
-import { Modal } from '@/components/ui/Modal';
+import { Modal } from '@/components/ui/modal';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { userApi } from '@/lib/api';
 import { User, UserRole } from '@/types/user';
@@ -18,7 +18,7 @@ import {
   TrashIcon,
   EllipsisVerticalIcon,
 } from '@heroicons/react/24/outline';
-import { Dropdown } from '@/components/ui/Dropdown';
+import { Dropdown } from '@/components/ui/dropdown';
 
 export default function UsersPage() {
   const [searchQuery, setSearchQuery] = useState('');
