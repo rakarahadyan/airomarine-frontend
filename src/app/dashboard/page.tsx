@@ -20,7 +20,7 @@ export default function DashboardPage() {
 
   return (
     <div className="h-screen flex flex-col">
-      <Header title="Maritime Tracking" />
+      <Header title="Airomarine" />
       
       <div className="flex-1 flex overflow-hidden">
         {/* Vessel list panel */}

@@ -100,7 +100,7 @@ export default function LoginPage() {
             </a>
           </div>
 
-          <Button type="submit" disabled={isLoading} className="w-full">
+          <Button type="submit" disabled={isLoading} className="w-full bg-blue-600 hover:bg-blue-700 text-white">
             {isLoading ? 'Signing in...' : 'Sign in'}
           </Button>
         </form>

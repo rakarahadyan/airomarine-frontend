@@ -2,8 +2,9 @@ export interface User {
   id: string;
   username: string;
   email?: string;
-  role_name: string;
-  role_id: number;
+  role?: string; // From login response
+  role_name?: string; // From user list
+  role_id?: number;
   permission_level?: string;
   active_until?: string | Date | null;
   created_at?: string | Date;

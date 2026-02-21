@@ -17,7 +17,10 @@ export function useAuth() {
       const { token, user } = response.data;
       localStorage.setItem('token', token);
       setAuth(user, token);
-      router.push('/');
+      router.push('/');         
+    },
+    onError: (error: any) => {
+      console.error('Login error:', error);
     },
   });
 
@@ -26,13 +29,13 @@ export function useAuth() {
     onSuccess: () => {
       localStorage.removeItem('token');
       clearAuth();
-      router.push('auth/login');
+      router.push('/auth/login');
     },
     onError: () => {
       // Even if logout fails, clear local state
       localStorage.removeItem('token');
       clearAuth();
-      router.push('auth/login');
+      router.push('/auth/login');
     },
   });
 

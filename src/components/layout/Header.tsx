@@ -48,7 +48,7 @@ export function Header({ title = 'Dashboard' }: HeaderProps) {
         {/* Search and actions */}
         <div className="flex items-center gap-4">
           {/* Search */}
-          <form onSubmit={handleSearch} className="hidden md:block">
+          {/* <form onSubmit={handleSearch} className="hidden md:block">
             <Input
               type="search"
               placeholder="Search vessels..."
@@ -57,7 +57,7 @@ export function Header({ title = 'Dashboard' }: HeaderProps) {
               leftIcon={<MagnifyingGlassIcon className="h-5 w-5" />}
               className="w-64"
             />
-          </form>
+          </form> */}
 
           {/* Theme toggle */}
           <button
