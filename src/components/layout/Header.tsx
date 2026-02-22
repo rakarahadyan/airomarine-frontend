@@ -72,7 +72,7 @@ export function Header({ title = 'Dashboard' }: HeaderProps) {
           </button>
 
           {/* Notifications */}
-          <button className="relative p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-400">
+          <button title='btnNotif' className="relative p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-400">
             <BellIcon className="h-5 w-5" />
             <span className="absolute top-1 right-1 h-2 w-2 bg-red-500 rounded-full" />
           </button>
