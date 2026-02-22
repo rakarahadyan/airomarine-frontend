@@ -4,39 +4,39 @@ import { cn } from '@/lib/utils';
 interface CardProps extends HTMLAttributes<HTMLDivElement> {}
 
 const Card = forwardRef<HTMLDivElement, CardProps>(
-  ({ className, ... props }, ref) => (
+  ({ className, ...props }, ref) => (
     <div
       ref={ref}
       className={cn(
         'rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800',
         className
       )}
-      {... props}
+      {...props}
     />
   )
 );
 Card.displayName = 'Card';
 
 const CardHeader = forwardRef<HTMLDivElement, CardProps>(
-  ({ className, ... props }, ref) => (
+  ({ className, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn('flex flex-col space-y-1. 5 p-6', className)}
-      {... props}
+      className={cn('flex flex-col space-y-1.5 p-6', className)}
+      {...props}
     />
   )
 );
 CardHeader.displayName = 'CardHeader';
 
 const CardTitle = forwardRef<HTMLParagraphElement, HTMLAttributes<HTMLHeadingElement>>(
-  ({ className, ... props }, ref) => (
+  ({ className, ...props }, ref) => (
     <h3
       ref={ref}
       className={cn(
         'text-lg font-semibold leading-none tracking-tight text-gray-900 dark:text-white',
         className
       )}
-      {... props}
+      {...props}
     />
   )
 );
@@ -47,7 +47,7 @@ const CardDescription = forwardRef<HTMLParagraphElement, HTMLAttributes<HTMLPara
     <p
       ref={ref}
       className={cn('text-sm text-gray-500 dark:text-gray-400', className)}
-      {... props}
+      {...props}
     />
   )
 );
@@ -61,7 +61,7 @@ const CardContent = forwardRef<HTMLDivElement, CardProps>(
 CardContent.displayName = 'CardContent';
 
 const CardFooter = forwardRef<HTMLDivElement, CardProps>(
-  ({ className, ... props }, ref) => (
+  ({ className, ...props }, ref) => (
     <div
       ref={ref}
       className={cn('flex items-center p-6 pt-0', className)}
