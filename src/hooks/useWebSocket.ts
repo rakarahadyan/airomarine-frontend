@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback, useState } from 'react';
 import { useVesselStore } from '@/stores/vesselStore';
 import { Vessel } from '@/types/vessel';
 
@@ -9,23 +9,32 @@ interface WebSocketMessage {
   data?: Vessel | Vessel[] | string;
 }
 
-const WS_URL = process.env.NEXT_PUBLIC_WS_URL;
-
-if (!WS_URL) {
+const WS_URL = process.env.NEXT_PUBLIC_WS_URL ?? (() => {
   throw new Error('NEXT_PUBLIC_WS_URL is not configured');
-}
+})();
+const RECONNECT_DELAY = 3000;
 
 export function useWebSocket() {
   const wsRef = useRef<WebSocket | null>(null);
-  const reconnectTimeoutRef = useRef<NodeJS.Timeout>();
-  const { updateVessel, setVessels } = useVesselStore();
+  const reconnectTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const connectRef = useRef<() => void>(() => undefined);
+  const shouldReconnectRef = useRef(true);
+  const [isConnected, setIsConnected] = useState(false);
+  const { addVessel, updateVessel, removeVessel } = useVesselStore();
 
   const connect = useCallback(() => {
-    if (wsRef.current?.readyState === WebSocket.OPEN) return;
+    if (
+      !shouldReconnectRef.current ||
+      wsRef.current?.readyState === WebSocket.OPEN ||
+      wsRef.current?.readyState === WebSocket.CONNECTING
+    ) {
+      return;
+    }
 
     const ws = new WebSocket(WS_URL);
 
     ws.onopen = () => {
+      setIsConnected(true);
       console.log('WebSocket connected');
     };
 
@@ -40,13 +49,21 @@ export function useWebSocket() {
             }
             break;
           case 'vessel_new':
-            // Handle new vessel
+            if (Array.isArray(message.data)) {
+              message.data.forEach((vessel) => addVessel(vessel));
+            } else if (message.data && typeof message.data === 'object') {
+              addVessel(message.data as Vessel);
+            }
             break;
           case 'vessel_remove':
-            // Handle vessel removal
+            if (typeof message.data === 'string') {
+              removeVessel(message.data);
+            }
             break;
           case 'ping':
-            ws.send(JSON.stringify({ type: 'pong' }));
+            if (ws.readyState === WebSocket.OPEN) {
+              ws.send(JSON.stringify({ type: 'pong' }));
+            }
             break;
         }
       } catch (error) {
@@ -55,24 +72,27 @@ export function useWebSocket() {
     };
 
     ws.onclose = () => {
+      setIsConnected(false);
+      if (! shouldReconnectRef.current) return;
       console.log('WebSocket disconnected, reconnecting...');
-      reconnectTimeoutRef.current = setTimeout(connect, 3000);
+      reconnectTimeoutRef.current = setTimeout(() => connectRef.current(), RECONNECT_DELAY);
     };
 
     ws.onerror = (error) => {
       console.error('WebSocket error:', error);
-      ws.close();
     };
 
     wsRef.current = ws;
-  }, [updateVessel]);
+  }, [addVessel, removeVessel, updateVessel]);
 
   const disconnect = useCallback(() => {
+    shouldReconnectRef.current = false;
     if (reconnectTimeoutRef.current) {
       clearTimeout(reconnectTimeoutRef.current);
     }
     wsRef.current?.close();
     wsRef.current = null;
+    setIsConnected(false);
   }, []);
 
   const sendMessage = useCallback((message: object) => {
@@ -82,12 +102,17 @@ export function useWebSocket() {
   }, []);
 
   useEffect(() => {
+    connectRef.current = connect;
+  }, [connect]);
+
+  useEffect(() => {
+    shouldReconnectRef.current = true;
     connect();
     return () => disconnect();
   }, [connect, disconnect]);
 
   return {
-    isConnected: wsRef.current?.readyState === WebSocket.OPEN,
+    isConnected,
     sendMessage,
     reconnect: connect,
   };

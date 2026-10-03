@@ -10,7 +10,9 @@ interface VesselStore {
   
   // Actions
   setVessels: (vessels: Vessel[]) => void;
+  addVessel: (vessel: Vessel) => void;
   updateVessel: (vessel: Vessel) => void;
+  removeVessel: (vesselId: string) => void;
   selectVessel: (vessel: Vessel | null) => void;
   setFilter: (filter: Partial<VesselFilter>) => void;
   clearFilter: () => void;
@@ -29,6 +31,13 @@ export const useVesselStore = create<VesselStore>((set, get) => ({
   error: null,
 
   setVessels: (vessels) => set({ vessels }),
+
+  addVessel: (vessel) =>
+    set((state) => ({
+      vessels: state.vessels.some((current) => current.id === vessel.id)
+        ? state.vessels.map((current) => current.id === vessel.id ? vessel : current)
+        : [...state.vessels, vessel],
+    })),
   
   updateVessel: (vessel) =>
     set((state) => ({
@@ -37,6 +46,13 @@ export const useVesselStore = create<VesselStore>((set, get) => ({
       ),
       selectedVessel:
         state.selectedVessel?.id === vessel.id ?  vessel : state.selectedVessel,
+    })),
+
+  removeVessel: (vesselId) =>
+    set((state) => ({
+      vessels: state.vessels.filter((vessel) => vessel.id !== vesselId),
+      selectedVessel:
+        state.selectedVessel?.id === vesselId ? null : state.selectedVessel,
     })),
 
   selectVessel: (vessel) => set({ selectedVessel: vessel }),

@@ -11,12 +11,12 @@ import { useWebSocket } from '@/hooks/useWebSocket';
 import { cn } from '@/lib/utils';
 
 export default function DashboardPage() {
-  // const [showVesselPanel, setShowVesselPanel] = useState(true);
+  const [showVesselPanel, setShowVesselPanel] = useState(true);
   const { selectedVessel, selectVessel } = useVesselStore();
   
   // Initialize data fetching and WebSocket
-  // useVessels();
-  // useWebSocket();
+  useVessels();
+  useWebSocket();
 
   return (
     <div className="h-screen flex flex-col">
@@ -24,14 +24,14 @@ export default function DashboardPage() {
       
       <div className="flex-1 flex overflow-hidden">
         {/* Vessel list panel */}
-        {/* <div
+        <div
           className={cn(
             'w-80 border-r border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 transition-all duration-300 overflow-hidden',
             ! showVesselPanel && 'w-0'
           )}
         >
           <VesselList />
-        </div> */}
+        </div>
 
         {/* Map */}
         <div className="flex-1 relative">

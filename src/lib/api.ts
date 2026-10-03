@@ -1,10 +1,13 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import { Vessel, VesselTrack } from '@/types/vessel';
+import { POI, POICategory, KMLLayer } from '@/types/poi';
+import { User } from '@/types/user';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 if (!API_BASE_URL) {
   throw new Error('NEXT_PUBLIC_API_URL is not configured');
-}
+} 
 
 class ApiClient {
   private client: AxiosInstance;
@@ -117,8 +120,3 @@ export const userApi = {
   changePassword: (userId: string, newPassword: string) => api.post('/change-user-password', { user_id: userId, new_password: newPassword }),
   getRoles: () => api.get('/get-user-roles'),
 };
-
-// Import types
-import { Vessel, VesselTrack } from '@/types/vessel';
-import { POI, POICategory, KMLLayer } from '@/types/poi';
-import { User } from '@/types/user';
