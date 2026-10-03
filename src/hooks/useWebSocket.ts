@@ -9,7 +9,11 @@ interface WebSocketMessage {
   data?: Vessel | Vessel[] | string;
 }
 
-const WS_URL = process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:8080/ws';
+const WS_URL = process.env.NEXT_PUBLIC_WS_URL;
+
+if (!WS_URL) {
+  throw new Error('NEXT_PUBLIC_WS_URL is not configured');
+}
 
 export function useWebSocket() {
   const wsRef = useRef<WebSocket | null>(null);
