@@ -79,8 +79,8 @@ export default function SettingsPage() {
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Map Type</label>
                 <select
-                  value={settings.mapType}
-                  onChange={(e) => updateSettings({ mapType: e.target.value as MapType })}
+                  value={mapSettings.mapType}
+                  onChange={(e) => updateMapSettings({ mapType: e.target.value as MapType })}
                   className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                 >
                   <option value={MapType.OPENSTREETMAP}>OpenStreetMap</option>
@@ -94,8 +94,12 @@ export default function SettingsPage() {
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Icon size</label>
                 <select
-                  value={settings.iconSize}
-                  onChange={(e) => updateSettings({ iconSize: e.target.value as any })}
+                  value={mapSettings.iconSize}
+                  onChange={(e) =>
+                    updateMapSettings({
+                      iconSize: e.target.value as 'small' | 'medium' | 'large',
+                    })
+                  }
                   className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                 >
                   <option value="small">Small</option>
@@ -108,8 +112,12 @@ export default function SettingsPage() {
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Refresh Rate (ms)</label>
                 <Input
                   type="number"
-                  value={String(settings.refreshRate)}
-                  onChange={(e) => updateSettings({ refreshRate: Math.max(250, Number(e.target.value) || 1000) })}
+                  value={String(mapSettings.refreshRate)}
+                  onChange={(e) =>
+                    updateMapSettings({
+                      refreshRate: Math.max(250, Number(e.target.value) || 1000),
+                    })
+                  }
                 />
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Minimum 250 ms recommended for demo; set higher for production.</p>
               </div>
@@ -120,8 +128,8 @@ export default function SettingsPage() {
                   <p className="text-xs text-gray-500 dark:text-gray-400">Cluster vessel markers at low zoom</p>
                 </div>
                 <Toggle
-                  enabled={settings.clusteringEnabled}
-                  onChange={(v) => updateSettings({ clusteringEnabled: v })}
+                  enabled={mapSettings.clusteringEnabled}
+                  onChange={(v) => updateMapSettings({ clusteringEnabled: v })}
                 />
               </div>
             </CardContent>

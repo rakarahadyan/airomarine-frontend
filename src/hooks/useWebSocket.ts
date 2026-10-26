@@ -20,7 +20,23 @@ export function useWebSocket() {
   const connectRef = useRef<() => void>(() => undefined);
   const shouldReconnectRef = useRef(true);
   const [isConnected, setIsConnected] = useState(false);
-  const { addVessel, updateVessel, removeVessel } = useVesselStore();
+  const { updateVessels, removeVessel } = useVesselStore();
+  const pendingUpdatesRef = useRef(new Map<string, Vessel>());
+  const flushFrameRef = useRef<number | null>(null);
+
+  const flushUpdates = useCallback(() => {
+    flushFrameRef.current = null;
+    const updates = Array.from(pendingUpdatesRef.current.values());
+    pendingUpdatesRef.current.clear();
+    if (updates.length > 0) updateVessels(updates);
+  }, [updateVessels]);
+
+  const queueUpdate = useCallback((vessel: Vessel) => {
+    pendingUpdatesRef.current.set(vessel.id, vessel);
+    if (flushFrameRef.current === null) {
+      flushFrameRef.current = requestAnimationFrame(flushUpdates);
+    }
+  }, [flushUpdates]);
 
   const connect = useCallback(() => {
     if (
@@ -45,14 +61,14 @@ export function useWebSocket() {
         switch (message.type) {
           case 'vessel_update':
             if (message.data && typeof message.data === 'object' && ! Array.isArray(message.data)) {
-              updateVessel(message.data as Vessel);
+              queueUpdate(message.data as Vessel);
             }
             break;
           case 'vessel_new':
             if (Array.isArray(message.data)) {
-              message.data.forEach((vessel) => addVessel(vessel));
+              message.data.forEach((vessel) => queueUpdate(vessel));
             } else if (message.data && typeof message.data === 'object') {
-              addVessel(message.data as Vessel);
+              queueUpdate(message.data as Vessel);
             }
             break;
           case 'vessel_remove':
@@ -83,7 +99,7 @@ export function useWebSocket() {
     };
 
     wsRef.current = ws;
-  }, [addVessel, removeVessel, updateVessel]);
+  }, [queueUpdate, removeVessel]);
 
   const disconnect = useCallback(() => {
     shouldReconnectRef.current = false;
@@ -92,6 +108,11 @@ export function useWebSocket() {
     }
     wsRef.current?.close();
     wsRef.current = null;
+    pendingUpdatesRef.current.clear();
+    if (flushFrameRef.current !== null) {
+      cancelAnimationFrame(flushFrameRef.current);
+      flushFrameRef.current = null;
+    }
     setIsConnected(false);
   }, []);
 

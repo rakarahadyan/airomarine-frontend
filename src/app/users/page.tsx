@@ -86,10 +86,10 @@ export default function UsersPage() {
     },
     {
       name: 'Role',
-      selector: (row) => row.role_name,
+      selector: (row) => row.role_name || '',
       cell: (row) => (
-        <Badge variant={getRoleBadgeVariant(row.role_name)} className="capitalize">
-          {row.role_name}
+        <Badge variant={getRoleBadgeVariant(row.role_name || '')} className="capitalize">
+          {row.role_name || 'Unknown'}
         </Badge>
       ),
       // width: '120px',
@@ -399,10 +399,10 @@ function UserForm({ user, onSubmit, onCancel }: UserFormProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const payload: Partial<User> & { password?: string; role_id?: string; active_until?: string | null } = {
+    const payload: Partial<User> & { password?: string; role_id?: number; active_until?: string | null } = {
       username,
       // email,
-      role_id: role,
+      role_id: Number(role),
       active_until: activeUntil || null,
     };
 

@@ -1,16 +1,16 @@
 'use client';
 
 import { useEffect, useCallback } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { vesselApi } from '@/lib/api';
 import { useVesselStore } from '@/stores/vesselStore';
 import { useMapStore } from '@/stores/mapStore';
-import { Vessel } from '@/types/vessel';
 
-export function useVessels() {
-  const queryClient = useQueryClient();
-  const { setVessels, setLoading, setError } = useVesselStore();
-  const { settings } = useMapStore();
+export function useVessels(isRealtimeConnected = false) {
+  const setVessels = useVesselStore((state) => state.setVessels);
+  const setLoading = useVesselStore((state) => state.setLoading);
+  const setError = useVesselStore((state) => state.setError);
+  const refreshRate = useMapStore((state) => state.settings.refreshRate);
 
   const {
     data: vessels,
@@ -19,9 +19,9 @@ export function useVessels() {
     refetch,
   } = useQuery({
     queryKey: ['vessels'],
-    queryFn: vesselApi.getAll,
-    refetchInterval: settings.refreshRate,
-    staleTime: settings.refreshRate - 100,
+    queryFn: () => vesselApi.getAll(),
+    refetchInterval: isRealtimeConnected ? false : refreshRate,
+    staleTime: Math.max(refreshRate - 100, 0),
   });
 
   useEffect(() => {

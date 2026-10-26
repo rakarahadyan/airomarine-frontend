@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Vessel, VesselFilter, VesselType, NavigationStatus } from '@/types/vessel';
+import { Vessel, VesselFilter } from '@/types/vessel';
 
 interface VesselStore {
   vessels: Vessel[];
@@ -10,6 +10,7 @@ interface VesselStore {
   
   // Actions
   setVessels: (vessels: Vessel[]) => void;
+  updateVessels: (vessels: Vessel[]) => void;
   addVessel: (vessel: Vessel) => void;
   updateVessel: (vessel: Vessel) => void;
   removeVessel: (vesselId: string) => void;
@@ -30,7 +31,60 @@ export const useVesselStore = create<VesselStore>((set, get) => ({
   isLoading: false,
   error: null,
 
-  setVessels: (vessels) => set({ vessels }),
+  setVessels: (vessels) =>
+    set((state) => {
+      if (
+        state.vessels.length === vessels.length &&
+        state.vessels.every((current, index) => {
+          const next = vessels[index];
+          return (
+            current.id === next.id &&
+            current.latitude === next.latitude &&
+            current.longitude === next.longitude &&
+            current.course === next.course &&
+            current.speed === next.speed &&
+            current.heading === next.heading &&
+            current.lastUpdate === next.lastUpdate
+          );
+        })
+      ) {
+        return state;
+      }
+
+      return { vessels };
+    }),
+
+  updateVessels: (updates) =>
+    set((state) => {
+      if (updates.length === 0) return state;
+
+      const updatesById = new Map(updates.map((vessel) => [vessel.id, vessel]));
+      let changed = false;
+      const vessels = state.vessels.map((vessel) => {
+        const update = updatesById.get(vessel.id);
+        if (!update) return vessel;
+        changed = true;
+        return update;
+      });
+
+      updates.forEach((vessel) => {
+        if (!state.vessels.some((current) => current.id === vessel.id)) {
+          vessels.push(vessel);
+          changed = true;
+        }
+      });
+
+      const selectedUpdate = state.selectedVessel
+        ? updatesById.get(state.selectedVessel.id)
+        : undefined;
+
+      return changed || selectedUpdate
+        ? {
+            vessels,
+            ...(selectedUpdate ? { selectedVessel: selectedUpdate } : {}),
+          }
+        : state;
+    }),
 
   addVessel: (vessel) =>
     set((state) => ({

@@ -13,7 +13,9 @@ export function VesselList() {
   const [showFilters, setShowFilters] = useState(false);
   const [selectedTypes, setSelectedTypes] = useState<VesselType[]>([]);
 
-  const { filteredVessels, setFilter, selectVessel } = useVesselStore();
+  const filteredVessels = useVesselStore((state) => state.filteredVessels);
+  const setFilter = useVesselStore((state) => state.setFilter);
+  const selectVessel = useVesselStore((state) => state.selectVessel);
   const vessels = filteredVessels();
 
   const handleSearch = (value: string) => {
@@ -45,7 +47,7 @@ export function VesselList() {
             className="flex-1"
           />
           <Button
-            variant={showFilters ?  'primary' : 'outline'}
+            variant={showFilters ? 'default' : 'outline'}
             onClick={() => setShowFilters(!showFilters)}
           >
             <FunnelIcon className="h-5 w-5" />

@@ -1,8 +1,9 @@
 'use client';
 
+import { memo } from 'react';
 import { Vessel } from '@/types/vessel';
 import { Badge } from '@/components/ui/Badge';
-import { getVesselColor, getNavigationStatusText, formatSpeed, formatCourse, formatDate } from '@/lib/utils';
+import { getVesselColor, formatSpeed, formatCourse, formatDate } from '@/lib/utils';
 import { cn } from '@/lib/utils';
 
 interface VesselCardProps {
@@ -11,7 +12,7 @@ interface VesselCardProps {
   isSelected?: boolean;
 }
 
-export function VesselCard({ vessel, onClick, isSelected }: VesselCardProps) {
+function VesselCardComponent({ vessel, onClick, isSelected }: VesselCardProps) {
   const statusVariant = vessel.speed > 0.5 ? 'success' : vessel.navStatus === 5 ? 'info' : 'warning';
 
   return (
@@ -79,3 +80,5 @@ export function VesselCard({ vessel, onClick, isSelected }: VesselCardProps) {
     </div>
   );
 }
+
+export const VesselCard = memo(VesselCardComponent);

@@ -32,9 +32,17 @@ export default function MapContent({ fullscreen = false }: MapContentProps) {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const markersRef = useRef<L.MarkerClusterGroup | null>(null);
   const vesselMarkersRef = useRef<Map<string, L.Marker>>(new Map());
+  const markerVesselsRef = useRef<Map<string, Vessel>>(new Map());
 
-  const { center, zoom, settings, setCenter, setZoom } = useMapStore();
-  const { vessels, selectedVessel, selectVessel, filteredVessels } = useVesselStore();
+  const center = useMapStore((state) => state.center);
+  const zoom = useMapStore((state) => state.zoom);
+  const settings = useMapStore((state) => state.settings);
+  const setCenter = useMapStore((state) => state.setCenter);
+  const setZoom = useMapStore((state) => state.setZoom);
+  const vessels = useVesselStore((state) => state.vessels);
+  const selectedVessel = useVesselStore((state) => state.selectedVessel);
+  const selectVessel = useVesselStore((state) => state.selectVessel);
+  const filteredVessels = useVesselStore((state) => state.filteredVessels);
 
   // Create vessel icon
   const createVesselIcon = useCallback((vessel: Vessel) => {
@@ -140,6 +148,7 @@ export default function MapContent({ fullscreen = false }: MapContentProps) {
         if (marker) {
           markersRef.current?.removeLayer(marker);
           vesselMarkersRef.current.delete(id);
+          markerVesselsRef.current.delete(id);
         }
       }
     });
@@ -147,11 +156,27 @@ export default function MapContent({ fullscreen = false }: MapContentProps) {
     // Add or update markers
     filtered.forEach((vessel) => {
       const existingMarker = vesselMarkersRef.current.get(vessel.id);
+      const previousVessel = markerVesselsRef.current.get(vessel.id);
 
       if (existingMarker) {
-        // Update existing marker
-        existingMarker.setLatLng([vessel.latitude, vessel.longitude]);
-        existingMarker.setIcon(createVesselIcon(vessel));
+        if (
+          !previousVessel ||
+          previousVessel.latitude !== vessel.latitude ||
+          previousVessel.longitude !== vessel.longitude
+        ) {
+          existingMarker.setLatLng([vessel.latitude, vessel.longitude]);
+        }
+
+        if (
+          !previousVessel ||
+          previousVessel.heading !== vessel.heading ||
+          previousVessel.course !== vessel.course ||
+          previousVessel.shipType !== vessel.shipType ||
+          previousVessel.lastUpdate !== vessel.lastUpdate
+        ) {
+          existingMarker.setIcon(createVesselIcon(vessel));
+          existingMarker.setPopupContent(createPopupContent(vessel));
+        }
       } else {
         // Create new marker
         const marker = L.marker([vessel.latitude, vessel.longitude], {
@@ -171,6 +196,7 @@ export default function MapContent({ fullscreen = false }: MapContentProps) {
         markersRef.current?.addLayer(marker);
         vesselMarkersRef.current.set(vessel.id, marker);
       }
+      markerVesselsRef.current.set(vessel.id, vessel);
     });
   }, [vessels, filteredVessels, createVesselIcon, selectVessel]);
 

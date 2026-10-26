@@ -14,9 +14,9 @@ export default function DashboardPage() {
   const [showVesselPanel, setShowVesselPanel] = useState(true);
   const { selectedVessel, selectVessel } = useVesselStore();
   
-  // Initialize data fetching and WebSocket
-  useVessels();
-  useWebSocket();
+  // Use polling only while realtime updates are unavailable.
+  const { isConnected } = useWebSocket();
+  useVessels(isConnected);
 
   return (
     <div className="h-screen flex flex-col">

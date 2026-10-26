@@ -164,7 +164,7 @@ export function POIForm({ poi, categories, onSubmit, onCancel, isLoading }: POIF
         <Button type="button" variant="outline" onClick={onCancel} className="flex-1">
           Cancel
         </Button>
-        <Button type="submit" isLoading={isLoading} className="flex-1">
+        <Button type="submit" disabled={isLoading} className="flex-1">
           {poi ?  'Update POI' : 'Create POI'}
         </Button>
       </div>
